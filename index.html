@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تطبيق EditSo</title>
+    
+    <!-- خط Cairo المميز -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            /* إزالة تأثير التحديد والضغط الأزرق على كافة العناصر */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none; /* لمنع تحديد النصوص أثناء اللمس */
+        }
+
+        body {
+            /* الخلفية الأساسية البنفسجية الداكنة */
+            background-color: #0b0213; 
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+
+        /* حاوية الصفحة الرئيسية */
+        .app-container {
+            background: linear-gradient(180deg, #1f0b3a 0%, #120424 100%);
+            border: 1px solid #3a155c;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        /* الجزء العلوي (الشعار والاسم) */
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            width: 95px;
+            height: 95px;
+            border-radius: 24px;
+            object-fit: cover;
+            /* هالة بنفسجية مضيئة حول الشعار */
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45); 
+            border: 1.5px solid rgba(168, 85, 247, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #c084fc;
+            font-weight: 600;
+        }
+
+        /* البطاقة التعريفية الرئيسية */
+        .intro-card {
+            background-color: #150726;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border-right: 3px solid #d946ef;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .intro-card p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+
+        /* شبكة مميزات التطبيق (الباجات المرقمة والمضيئة) */
+        .features-container {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .feature-card {
+            background-color: #150726;
+            border-radius: 16px;
+            padding: 18px 15px 18px 20px;
+            position: relative;
+            border-right: 3px solid #d946ef;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* الأرقام المضيئة في أعلى البطاقات */
+        .badge-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #a855f7, #c026d3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            box-shadow: 0 0 12px rgba(192, 38, 211, 0.6);
+            color: white;
+            z-index: 2;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #f472b6;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        /* مربع الحالة / التحديثات */
+        .status-box {
+            background: linear-gradient(90deg, #1e0915, #2b0d1e);
+            border-right: 4px solid #38bdf8;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .status-text {
+            color: #e0f2fe;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-icon {
+            font-size: 1.1rem;
+            color: #38bdf8;
+        }
+
+        /* أزرار التواصل الاجتماعي */
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #3a155c;
+            padding-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .btn-tiktok {
+            background-color: #1d0a35;
+            color: #e9d5ff;
+            border: 1px solid #3a155c;
+        }
+
+        .btn-tiktok:active {
+            background-color: #2d1045;
+            border-color: #d946ef;
+        }
+
+        .btn-telegram {
+            background-color: rgba(40, 168, 233, 0.1);
+            color: #38bdf8;
+            border: 1px solid rgba(40, 168, 233, 0.2);
+        }
+
+        .btn-telegram:active {
+            background-color: rgba(40, 168, 233, 0.2);
+            border-color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- الهيدر واللوغو -->
+        <div class="header-section">
+            <img src="1000062933.png" alt="EditSo Logo" class="logo">
+            <h1 class="title">EditSo</h1>
+            <div class="subtitle">المحرر الأسهل لملفات الـ SO</div>
+        </div>
+
+        <!-- نبذة تعريفية -->
+        <div class="intro-card">
+            <p>
+                التطبيق المطور خصيصاً لتسهيل عملية قراءة وتعديل النصوص والبيانات داخل ملفات <strong>.so</strong> على أجهزة الأندرويد دون الحاجة لأدوات معقدة.
+            </p>
+        </div>
+
+        <!-- المميزات بتصميم الباجات المرقمة -->
+        <div class="features-container">
+            
+            <div class="feature-card">
+                <div class="badge-number">1</div>
+                <div class="feature-title">
+                    <i class="fa-solid fa-bolt"></i> تحرير سريع وسلس
+                </div>
+                <div class="feature-desc">
+                    واجهة بصرية واضحة تتيح لك العثور على النصوص واستبدالها في أسرع وقت.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="badge-number">2</div>
+                <div class="feature-title">
+                    <i class="fa-solid fa-shield-halved"></i> حماية واستقرار
+                </div>
+                <div class="feature-desc">
+                    نظام معالجة ذكي يضمن حفظ التعديلات وحماية ملفاتك من التلف أثناء التصدير.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="badge-number">3</div>
+                <div class="feature-title">
+                    <i class="fa-solid fa-mobile-screen-button"></i> دعم شامل للهاتف
+                </div>
+                <div class="feature-desc">
+                    صُمم خصيصاً ليمنحك تجربة التعديل الكاملة من هاتفك مباشرة وبأعلى كفاءة.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- شريط حالة التحديثات -->
+        <div class="status-box">
+            <div class="status-text">
+                تابعنا ليصلك كل جديد وتحديثات التطبيق المستمرة
+            </div>
+            <div class="status-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+        </div>
+
+        <!-- أزرار التواصل -->
+        <div class="social-buttons">
+            <a href="https://www.tiktok.com/@xezn99" target="_blank" class="btn btn-tiktok">
+                <i class="fa-brands fa-tiktok"></i>
+                <span>تيك توك</span>
+            </a>
+            <a href="https://t.me/xezn9" target="_blank" class="btn btn-telegram">
+                <i class="fa-brands fa-telegram"></i>
+                <span>تيليجرام</span>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
